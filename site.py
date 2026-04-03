@@ -2,7 +2,7 @@ import streamlit as st
 import urllib.parse
 
 # 1. Configuration ultra-légère
-st.set_page_config(page_title="Aly Digital", layout="wide")
+st.set_page_config(page_title="QR CODE", layout="wide")
 
 # 2. CSS Adaptatif (Spécial WatchOS)
 st.markdown("""
