@@ -1,83 +1,84 @@
 import streamlit as st
 import urllib.parse
 
-# 1. Configuration de base (Pas de titre d'onglet pour gagner du temps)
-st.set_page_config(layout="wide")
+# 1. CONFIGURATION MINIMALE (Vitesse de chargement prioritaire)
+st.set_page_config(layout="centered")
 
-# 2. Variable de contact
-whatsapp_url = f"https://wa.me/221776938761?text={urllib.parse.quote('Infos QR Code')}"
+# 2. LIEN WHATSAPP
+msg = urllib.parse.quote("Bonjour Aly, je souhaite une démo.")
+whatsapp_url = f"https://wa.me/221776938761?text={msg}"
 
-# --- 3. CSS ULTRA-SIMPLIFIÉ ---
+# --- 3. CSS HYBRIDE (ADAPTATION WATCH AUTOMATIQUE) ---
 st.markdown(f"""
     <style>
-    /* Supprimer tout ce qui pèse */
+    /* Supprimer l'interface Streamlit pour libérer la RAM de la montre */
     #MainMenu, footer, header, .stDeployButton {{ display:none !important; }}
+    [data-testid="stToolbar"] {{ visibility: hidden !important; }}
     
     .stApp {{
-        background: #73A3BF; /* Couleur unie pour la montre */
+        background: #73A3BF; /* Couleur fixe pour chargement instantané */
         font-family: -apple-system, system-ui, sans-serif;
+        color: white;
     }}
 
-    /* Cartes sans effets de flou (trop lourd pour la SE) */
-    .watch-card {{
+    /* Cartes Ultra-Légères */
+    .card {{
         background: white;
-        padding: 15px;
-        border-radius: 10px;
-        margin: 10px 0;
+        padding: 12px;
+        border-radius: 12px;
+        margin: 8px 0;
         color: #1a1a1a;
         text-align: center;
-        border: 1px solid #ddd;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }}
 
-    .btn-qr {{
+    /* Bouton tactile pour petit écran */
+    .btn {{
         background: #25D366;
         color: white !important;
         padding: 15px;
-        border-radius: 10px;
+        border-radius: 12px;
         display: block;
         text-decoration: none;
-        font-weight: bold;
+        font-weight: 800;
         text-align: center;
+        margin-top: 15px;
     }}
 
-    /* RÉTABLIR LE LOOK LUXE SUR PC/IPHONE SEULEMENT */
-    @media (min-width: 350px) {{
+    /* REVENIR AU LOOK LUXE SI L'ÉCRAN EST ASSEZ GRAND (IPHONE/PC) */
+    @media (min-width: 310px) {{
         .stApp {{
             background: linear-gradient(135deg, #73A3BF 0%, #FCE1BB 100%) !important;
         }}
-        .watch-card {{
-            background: rgba(255, 255, 255, 0.8);
+        .card {{
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(10px);
-            border-radius: 25px;
+            border-radius: 20px;
         }}
     }}
     </style>
 """, unsafe_allow_html=True)
 
-# --- 4. LE CONTENU (ORDRE CRITIQUE) ---
+# --- 4. LE CONTENU (ZÉRO CALCUL) ---
+st.markdown("<h2 style='text-align:center;'>Aly Digital 🇸🇳</h2>", unsafe_allow_html=True)
 
-# Titre Minimaliste
-st.markdown("<h2 style='color:white; text-align:center;'>Aly Digital 🇸🇳</h2>", unsafe_allow_html=True)
+# Liste des Packs (Vertical pour la Watch)
+st.markdown('<div class="card"><b>FLASH</b><br>3 500 F CFA</div>', unsafe_allow_html=True)
+st.markdown('<div class="card"><b>STARTER</b><br>15 000 F CFA</div>', unsafe_allow_html=True)
+st.markdown('<div class="card"><b>BUSINESS</b><br>35 000 F CFA</div>', unsafe_allow_html=True)
 
-# On affiche les prix DIRECTEMENT (Pas de colonnes complexes pour la montre)
-st.markdown('<div class="watch-card"><b>Pack FLASH</b><br>3 500 F CFA</div>', unsafe_allow_html=True)
-st.markdown('<div class="watch-card"><b>Pack STARTER</b><br>15 000 F CFA</div>', unsafe_allow_html=True)
-st.markdown('<div class="watch-card"><b>Pack BUSINESS</b><br>35 000 F CFA</div>', unsafe_allow_html=True)
+# Bouton d'action direct
+st.markdown(f'<a href="{whatsapp_url}" class="btn">CONTACT WHATSAPP</a>', unsafe_allow_html=True)
 
-# Bouton d'action (Prioritaire sur Watch)
-st.markdown(f'<a href="{whatsapp_url}" class="btn-qr">CONTACT WHATSAPP</a>', unsafe_allow_html=True)
+st.write("---")
 
-# L'image ne charge QUE sur les grands écrans pour ne pas bloquer la montre
-if st.sidebar.hidden: # Astuce technique
-    pass
-else:
-    st.write("---")
-    st.markdown('<p style='color:white; text-align:center; font-size:0.7rem;'>Expertise & Modernité</p>', unsafe_allow_html=True)
+# Image optionnelle (Ne chargera que si la montre a la puissance pour)
+st.markdown('<p style="text-align:center; font-size:0.7rem;">Digitalisation & Hygiène</p>', unsafe_allow_html=True)
 
-# --- 5. JS HYBRIDE (Désactivé sur Watch) ---
+# --- 5. JAVASCRIPT BRIDÉ (Désactivé sur Watch) ---
 st.components.v1.html("""
     <script>
-    if (window.innerWidth > 350) {
+    if (window.innerWidth > 310) {
         const app = window.parent.document.querySelector('.stApp');
         window.parent.addEventListener('mousemove', (e) => {
             let x = e.clientX / window.parent.innerWidth;
