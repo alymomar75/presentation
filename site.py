@@ -2,7 +2,7 @@ import streamlit as st
 import urllib.parse
 
 # Configuration
-st.set_page_config(page_title="Aly Momar Diallo | Digital Fluid Pro", layout="wide", page_icon="🌊")
+st.set_page_config(page_title="QR CODE | Digital Fluid Pro", layout="wide", page_icon="🌊")
 
 # --- 1. STYLE CSS (LISSAGE ET DESIGN CANVA) ---
 st.markdown("""
