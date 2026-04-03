@@ -9,9 +9,8 @@ whatsapp_url = f"https://wa.me/221776938761?text={urllib.parse.quote('Bonjour Al
 
 # Dictionnaire de tes créations
 realisations = [
-    {"nom": "KFC Sénégal", "url": "https://kfc-senegal.streamlit.app/", "img": "https://images.unsplash.com/photo-1513639776629-7b61b0ac49cb?q=80&w=400"},
-    {"nom": "Aurora Menu", "url": "https://aurora-menu.streamlit.app/", "img": "https://images.unsplash.com/photo-1550966842-2849a28eef7a?q=80&w=400"},
-    {"nom": "La Brioche Dorée", "url": "https://la-brioche-doree.streamlit.app/", "img": "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=400"}
+    {"nom": "KFC Sénégal", "url": "https://kfctest.streamlit.app//", "img": "https://images.unsplash.com/photo-1513639776629-7b61b0ac49cb?q=80&w=400"},
+    {"nom": "La Brioche Dorée", "url": "https://menuqrcode.streamlit.app//", "img": "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=400"}
 ]
 
 # --- 3. STYLE CSS (LUXE & DYNAMIQUE) ---
