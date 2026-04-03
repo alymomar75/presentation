@@ -1,79 +1,95 @@
 import streamlit as st
 import urllib.parse
 
-# Configuration
-st.set_page_config(page_title="Aly Momar Diallo | Digital Fluid", layout="wide", page_icon="🌊")
+# Configuration de la page
+st.set_page_config(page_title="Aly Momar Diallo | Digital Fluid Pro", layout="wide", page_icon="🌊")
 
-# --- 1. STYLE CSS (CORRIGÉ) ---
+# --- 1. STYLE CSS (LISSAGE ET DESIGN CANVA) ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
 
-    /* Masquage Streamlit */
+    /* Masquage des éléments techniques */
     #MainMenu, footer, header {visibility: hidden;}
     [data-testid="stToolbar"] {visibility: hidden !important;}
     .stDeployButton {display:none;}
 
-    /* Fond Fluide avec tes couleurs */
+    /* Fond de base : Transition douce de 1.5s pour la progressivité */
     .stApp {
         background: linear-gradient(135deg, #73A3BF 0%, #FCE1BB 100%);
         background-attachment: fixed;
-        transition: background 0.2s ease-out;
+        transition: background 1.5s cubic-bezier(0.25, 0.1, 0.25, 1);
         font-family: 'Poppins', sans-serif;
         color: #1e293b;
     }
 
-    /* Cartes Glassmorphism */
+    /* Cartes translucides pour voir le fluide bouger derrière */
     .canva-card {
-        background: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(12px);
-        padding: 25px;
-        border-radius: 30px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(15px);
+        padding: 30px;
+        border-radius: 35px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.04);
         text-align: center;
-        margin-bottom: 15px;
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        color: #2d3436;
+        margin-bottom: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        transition: transform 0.3s ease;
     }
+    
+    .canva-card:hover { transform: translateY(-5px); }
 
     .hero-img {
-        border-radius: 35px;
-        box-shadow: 0 15px 45px rgba(0,0,0,0.15);
+        border-radius: 40px;
+        box-shadow: 0 20px 50px rgba(115, 163, 191, 0.3);
         width: 100%;
-        max-height: 350px;
+        max-height: 380px;
         object-fit: cover;
     }
 
     .btn-whatsapp {
         background-color: #25D366;
         color: white !important;
-        padding: 18px 30px;
+        padding: 20px 35px;
         border-radius: 50px;
         text-decoration: none;
         font-weight: 800;
         display: block;
         text-align: center;
-        margin: 10px 0;
-        box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+        box-shadow: 0 15px 30px rgba(37, 211, 102, 0.2);
     }
     </style>
 """, unsafe_allow_html=True)
 
-# --- 2. SCRIPT JAVASCRIPT (SÉPARÉ POUR ÉVITER L'ERREUR) ---
+# --- 2. JAVASCRIPT : MOTEUR DE FLUIDE PROGRESSIF ---
 st.components.v1.html("""
     <script>
     const app = window.parent.document.querySelector('.stApp');
-    
-    function updateBG(e) {
-        let x = e.beta;  
-        let y = e.gamma; 
-        let angle = (x + y);
-        app.style.background = `linear-gradient(${angle}deg, #73A3BF 0%, #FCE1BB 100%)`;
+    let targetAngle = 135;
+    let currentAngle = 135;
+
+    // Fonction de lissage (Lerp)
+    function lerp(start, end, amt) {
+        return (1 - amt) * start + amt * end;
     }
 
-    window.parent.addEventListener('deviceorientation', updateBG);
+    function updateOrientation(e) {
+        // On calcule un angle cible basé sur l'inclinaison (beta et gamma)
+        targetAngle = 135 + (e.beta / 2) + (e.gamma / 2);
+    }
+
+    function animate() {
+        // On approche l'angle actuel vers l'angle cible très doucement (0.05)
+        currentAngle = lerp(currentAngle, targetAngle, 0.05);
+        app.style.background = `linear-gradient(${currentAngle}deg, #73A3BF 0%, #FCE1BB 100%)`;
+        requestAnimationFrame(animate);
+    }
+
+    // Lancement de l'animation
+    animate();
+
+    window.parent.addEventListener('deviceorientation', updateOrientation);
     
-    // Pour iOS : demande d'accès au premier clic
+    // Activation pour iOS
     window.parent.document.addEventListener('click', function() {
         if (typeof DeviceOrientationEvent.requestPermission === 'function') {
             DeviceOrientationEvent.requestPermission();
@@ -82,39 +98,39 @@ st.components.v1.html("""
     </script>
 """, height=0)
 
-# --- 3. CONTENU DE LA PAGE ---
-col_text, col_img = st.columns([5, 5])
+# --- 3. CONTENU ---
+col_1, col_2 = st.columns([5, 5])
 
-with col_text:
-    st.write("<br>", unsafe_allow_html=True)
-    st.markdown("<h1 style='font-size: 2.8rem;'>Le Digital en Mouvement 🌊</h1>", unsafe_allow_html=True)
-    st.markdown("### Par Aly Momar Diallo")
-    st.write("Une solution moderne et hygiénique pour booster votre commerce à Dakar.")
-    st.info("📱 **Effet Fluide :** Inclinez votre téléphone pour voir les couleurs bouger !")
+with col_1:
+    st.write("<br><br>", unsafe_allow_html=True)
+    st.markdown("<h1 style='font-size: 3.2rem; line-height: 1.1;'>Digitalisez avec Élégance 🌊</h1>", unsafe_allow_html=True)
+    st.markdown("### Aly Momar Diallo | Expert Solutions QR")
+    st.write("Offrez une expérience sensorielle et hygiénique unique à vos clients à Dakar.")
+    st.success("📱 **Expérience immersive :** Bougez doucement votre téléphone pour voir les couleurs réagir.")
 
-with col_img:
+with col_2:
     st.markdown("""<img src="https://images.unsplash.com/photo-1595079676339-1534801ad6cf?q=80&w=1000&auto=format&fit=crop" class="hero-img">""", unsafe_allow_html=True)
 
-st.write("<br>", unsafe_allow_html=True)
+st.divider()
 
-# --- 4. PACKS TARIFS ---
-st.markdown("<h2 style='text-align: center;'>Nos Offres 💳</h2>", unsafe_allow_html=True)
+# --- 4. OFFRES (PACKS CFA) ---
+st.markdown("<h2 style='text-align: center; margin-bottom: 30px;'>Nos Offres Digitales 💳</h2>", unsafe_allow_html=True)
 p1, p2, p3, p4 = st.columns(4)
 
 packs = [
     {"n": "Pack FLASH", "p": "3 500 F", "d": "Le QR Code simple", "c": "#73A3BF"},
     {"n": "Pack STARTER", "p": "15 000 F", "d": "Menu (Max 15 art.)", "c": "#5a8ba8"},
     {"n": "Pack BUSINESS", "p": "35 000 F", "d": "Commande WhatsApp", "c": "#4a768e"},
-    {"n": "Pack PREMIUM", "p": "Sur Devis", "d": "Luxe Sur-mesure", "c": "#b08d57"}
+    {"n": "Pack PREMIUM", "p": "Sur Devis", "d": "Luxe & Sur-mesure", "c": "#b08d57"}
 ]
 
 for i, p in enumerate(packs):
     with (p1 if i==0 else p2 if i==1 else p3 if i==2 else p4):
         st.markdown(f"""
         <div class="canva-card">
-            <span style="background:{p['c']}; color:white; padding:5px 15px; border-radius:20px; font-size:0.7rem; font-weight:bold;">{p['n']}</span>
-            <h2 style="margin:15px 0; color:#1e293b;">{p['p']}</h2>
-            <p style="font-size:0.8rem; color:#636e72;">{p['d']}</p>
+            <div style="background:{p['c']}; color:white; padding:5px 15px; border-radius:20px; font-size:0.7rem; font-weight:bold; display:inline-block; margin-bottom:15px;">{p['n']}</div>
+            <h2 style="margin:0; color:#1e293b;">{p['p']}</h2>
+            <p style="font-size:0.85rem; color:#636e72; margin-top:10px;">{p['d']}</p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -124,28 +140,28 @@ c_left, c_right = st.columns(2)
 
 with c_left:
     st.markdown("""
-    <div style="background: white; padding: 30px; border-radius: 30px; color: #2D3436; border: 1px solid #eee;">
-        <h3 style="margin-top:0; color:#73A3BF;">Demander une démo 📧</h3>
+    <div style="background: white; padding: 40px; border-radius: 35px; border: 1px solid #f1f1f1;">
+        <h3 style="margin-top:0; color:#73A3BF;">Parlons de votre projet 📧</h3>
         <form action="https://formsubmit.co/alymomardiallo75@gmail.com" method="POST">
-            <input type="text" name="commerce" placeholder="Nom de votre Commerce" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:15px; border:1px solid #eee;">
-            <input type="text" name="contact" placeholder="WhatsApp ou Email" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:15px; border:1px solid #eee;">
-            <button type="submit" style="width:100%; background: #73A3BF; color: white; border: none; padding: 15px; border-radius: 15px; font-weight: bold; cursor: pointer;">ENVOYER</button>
+            <input type="text" name="commerce" placeholder="Nom de l'établissement" required style="width:100%; padding:15px; margin-bottom:15px; border-radius:15px; border:1px solid #eee;">
+            <input type="text" name="contact" placeholder="Numéro WhatsApp" required style="width:100%; padding:15px; margin-bottom:15px; border-radius:15px; border:1px solid #eee;">
+            <button type="submit" style="width:100%; background: #73A3BF; color: white; border: none; padding: 18px; border-radius: 15px; font-weight: bold; cursor: pointer;">DÉMARRER MAINTENANT</button>
         </form>
     </div>
     """, unsafe_allow_html=True)
 
 with c_right:
-    whatsapp_msg = urllib.parse.quote("Bonjour Aly ! Je suis intéressé par votre solution digitale.")
+    whatsapp_msg = urllib.parse.quote("Bonjour Aly ! Je souhaite une démonstration pour mon commerce.")
     whatsapp_url = f"https://wa.me/221776938761?text={whatsapp_msg}"
     st.markdown(f"""
-        <div style="text-align: center; padding: 20px;">
-            <p style="font-size:1.1rem; font-weight:bold;">Réponse rapide ?</p>
+        <div style="text-align: center; padding: 40px;">
+            <p style="font-size:1.2rem; font-weight:600;">Une question urgente ?</p>
             <a href="{whatsapp_url}" class="btn-whatsapp" target="_blank">
                 💬 WHATSAPP DIRECT
             </a>
-            <p style="font-size:0.8rem; opacity:0.8;">Réponse garantie sous 24h</p>
+            <p style="font-size:0.85rem; opacity:0.7; margin-top:15px;">Réponse rapide garantie.</p>
         </div>
     """, unsafe_allow_html=True)
 
 # --- FOOTER ---
-st.markdown("<p style='text-align: center; color: #555; font-size: 0.7rem; margin-top:40px;'>© 2026 | ALY MOMAR DIALLO | DAKAR 🇸🇳</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #777; font-size: 0.75rem; margin-top:60px; letter-spacing:1px;'>© 2026 | ALY MOMAR DIALLO | DAKAR, SÉNÉGAL 🇸🇳</p>", unsafe_allow_html=True)
