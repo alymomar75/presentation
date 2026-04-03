@@ -2,7 +2,7 @@ import streamlit as st
 import urllib.parse
 
 # 1. CONFIGURATION
-st.set_page_config(page_title="Aly Momar Diallo | Portfolio Digital", layout="wide", page_icon="📲")
+st.set_page_config(page_title="Qr Code | Portfolio Digital", layout="wide", page_icon="📲")
 
 # 2. LIENS ET URLS
 whatsapp_url = f"https://wa.me/221776938761?text={urllib.parse.quote('Bonjour Aly, j\'ai vu votre portfolio !')}"
