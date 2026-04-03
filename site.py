@@ -1,89 +1,140 @@
 import streamlit as st
 import urllib.parse
 
-# 1. CONFIGURATION MINIMALE (Vitesse de chargement prioritaire)
-st.set_page_config(layout="centered")
+# 1. CONFIGURATION
+st.set_page_config(page_title="Aly Momar Diallo | Portfolio Digital", layout="wide", page_icon="📲")
 
-# 2. LIEN WHATSAPP
-msg = urllib.parse.quote("Bonjour Aly, je souhaite une démo.")
-whatsapp_url = f"https://wa.me/221776938761?text={msg}"
+# 2. LIENS ET URLS
+whatsapp_url = f"https://wa.me/221776938761?text={urllib.parse.quote('Bonjour Aly, j\'ai vu votre portfolio !')}"
 
-# --- 3. CSS HYBRIDE (ADAPTATION WATCH AUTOMATIQUE) ---
-st.markdown(f"""
+# Dictionnaire de tes créations
+realisations = [
+    {"nom": "KFC Sénégal", "url": "https://kfc-senegal.streamlit.app/", "img": "https://images.unsplash.com/photo-1513639776629-7b61b0ac49cb?q=80&w=400"},
+    {"nom": "Aurora Menu", "url": "https://aurora-menu.streamlit.app/", "img": "https://images.unsplash.com/photo-1550966842-2849a28eef7a?q=80&w=400"},
+    {"nom": "La Brioche Dorée", "url": "https://la-brioche-doree.streamlit.app/", "img": "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=400"}
+]
+
+# --- 3. STYLE CSS (LUXE & DYNAMIQUE) ---
+st.markdown("""
     <style>
-    /* Supprimer l'interface Streamlit pour libérer la RAM de la montre */
-    #MainMenu, footer, header, .stDeployButton {{ display:none !important; }}
-    [data-testid="stToolbar"] {{ visibility: hidden !important; }}
-    
-    .stApp {{
-        background: #73A3BF; /* Couleur fixe pour chargement instantané */
-        font-family: -apple-system, system-ui, sans-serif;
-        color: white;
-    }}
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
 
-    /* Cartes Ultra-Légères */
-    .card {{
-        background: white;
-        padding: 12px;
-        border-radius: 12px;
-        margin: 8px 0;
-        color: #1a1a1a;
+    #MainMenu, footer, header, .stDeployButton { display:none !important; }
+    [data-testid="stToolbar"] { visibility: hidden !important; }
+
+    .stApp {
+        background: linear-gradient(135deg, #73A3BF 0%, #FCE1BB 100%);
+        background-attachment: fixed;
+        font-family: 'Poppins', sans-serif;
+        transition: background 0.8s ease;
+        color: #1e293b;
+    }
+
+    /* Cartes Glassmorphism */
+    .lux-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        padding: 30px;
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
         text-align: center;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }}
+        margin-bottom: 20px;
+    }
 
-    /* Bouton tactile pour petit écran */
-    .btn {{
+    /* Cartes Portfolio */
+    .port-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        transition: 0.4s;
+        text-decoration: none;
+        display: block;
+        color: #1e293b;
+        margin-bottom: 20px;
+    }
+    .port-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+    .port-img { width: 100%; height: 150px; object-fit: cover; }
+    .port-info { padding: 15px; font-weight: 600; text-align: center; }
+
+    .btn-wa {
         background: #25D366;
         color: white !important;
-        padding: 15px;
-        border-radius: 12px;
-        display: block;
+        padding: 18px 35px;
+        border-radius: 50px;
         text-decoration: none;
-        font-weight: 800;
-        text-align: center;
-        margin-top: 15px;
-    }}
-
-    /* REVENIR AU LOOK LUXE SI L'ÉCRAN EST ASSEZ GRAND (IPHONE/PC) */
-    @media (min-width: 310px) {{
-        .stApp {{
-            background: linear-gradient(135deg, #73A3BF 0%, #FCE1BB 100%) !important;
-        }}
-        .card {{
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-        }}
-    }}
+        font-weight: 700;
+        display: inline-block;
+        box-shadow: 0 10px 25px rgba(37, 211, 102, 0.2);
+    }
     </style>
 """, unsafe_allow_html=True)
 
-# --- 4. LE CONTENU (ZÉRO CALCUL) ---
-st.markdown("<h2 style='text-align:center;'>Aly Digital 🇸🇳</h2>", unsafe_allow_html=True)
+# --- 4. JS MOUVEMENT ---
+st.components.v1.html("""
+    <script>
+    const app = window.parent.document.querySelector('.stApp');
+    window.parent.addEventListener('mousemove', (e) => {
+        let x = e.clientX / window.parent.innerWidth;
+        app.style.background = `linear-gradient(${x * 360}deg, #73A3BF 0%, #FCE1BB 100%)`;
+    });
+    window.parent.addEventListener('deviceorientation', (e) => {
+        app.style.background = `linear-gradient(${135 + e.gamma}deg, #73A3BF 0%, #FCE1BB 100%)`;
+    });
+    </script>
+""", height=0)
 
-# Liste des Packs (Vertical pour la Watch)
-st.markdown('<div class="card"><b>FLASH</b><br>3 500 F CFA</div>', unsafe_allow_html=True)
-st.markdown('<div class="card"><b>STARTER</b><br>15 000 F CFA</div>', unsafe_allow_html=True)
-st.markdown('<div class="card"><b>BUSINESS</b><br>35 000 F CFA</div>', unsafe_allow_html=True)
+# --- 5. CONTENU ---
 
-# Bouton d'action direct
-st.markdown(f'<a href="{whatsapp_url}" class="btn">CONTACT WHATSAPP</a>', unsafe_allow_html=True)
+# Hero Section
+c1, c2 = st.columns([6, 4])
+with c1:
+    st.write("<br><br>", unsafe_allow_html=True)
+    st.markdown("<h1 style='font-size: 3rem;'>L'Expert du Menu Digital à Dakar 🇸🇳</h1>", unsafe_allow_html=True)
+    st.write("Déjà adopté par les plus grands. Découvrez mes réalisations et passez au QR Code de luxe.")
+    st.markdown(f'<br><a href="{whatsapp_url}" class="btn-wa">DISCUTER DE MON PROJET</a>', unsafe_allow_html=True)
+with c2:
+    st.image("https://images.unsplash.com/photo-1595079676339-1534801ad6cf?w=600", use_container_width=True)
 
 st.write("---")
 
-# Image optionnelle (Ne chargera que si la montre a la puissance pour)
-st.markdown('<p style="text-align:center; font-size:0.7rem;">Digitalisation & Hygiène</p>', unsafe_allow_html=True)
+# --- SECTION PORTFOLIO ---
+st.markdown("<h2 style='text-align: center;'>Nos Réalisations ✨</h2>", unsafe_allow_html=True)
+st.write("<p style='text-align: center;'>Cliquez pour visualiser les menus en direct</p>", unsafe_allow_html=True)
 
-# --- 5. JAVASCRIPT BRIDÉ (Désactivé sur Watch) ---
-st.components.v1.html("""
-    <script>
-    if (window.innerWidth > 310) {
-        const app = window.parent.document.querySelector('.stApp');
-        window.parent.addEventListener('mousemove', (e) => {
-            let x = e.clientX / window.parent.innerWidth;
-            app.style.background = `linear-gradient(${x * 360}deg, #73A3BF 0%, #FCE1BB 100%)`;
-        });
-    }
-    </script>
-""", height=0)
+pc1, pc2, pc3 = st.columns(3)
+for i, site in enumerate(realisations):
+    with (pc1 if i==0 else pc2 if i==1 else pc3):
+        st.markdown(f"""
+            <a href="{site['url']}" target="_blank" class="port-card">
+                <img src="{site['img']}" class="port-img">
+                <div class="port-info">{site['nom']} <br> <span style="font-size:0.7rem; color:#73A3BF;">Voir le site →</span></div>
+            </a>
+        """, unsafe_allow_html=True)
+
+st.write("<br><br>", unsafe_allow_html=True)
+
+# --- SECTION TARIFS ---
+st.markdown("<h2 style='text-align: center;'>Nos Offres 💳</h2>", unsafe_allow_html=True)
+p1, p2, p3, p4 = st.columns(4)
+
+tarifs = [
+    {"n": "Pack FLASH", "p": "3 500 F", "d": "Le QR Code simple", "c": "#73A3BF"},
+    {"n": "Pack STARTER", "p": "15 000 F", "d": "Menu (Max 15 art.)", "c": "#5a8ba8"},
+    {"n": "Pack BUSINESS", "p": "35 000 F", "d": "Commande WhatsApp", "c": "#4a768e"},
+    {"n": "Pack PREMIUM", "p": "Sur Devis", "d": "Sur-mesure Complet", "c": "#b08d57"}
+]
+
+for i, t in enumerate(tarifs):
+    with (p1 if i==0 else p2 if i==1 else p3 if i==2 else p4):
+        st.markdown(f"""
+        <div class="lux-card">
+            <span style="background:{t['c']}; color:white; padding:5px 15px; border-radius:20px; font-size:0.7rem; font-weight:bold;">{t['n']}</span>
+            <h2 style="margin:15px 0;">{t['p']}</h2>
+            <p style="font-size:0.8rem; color:#64748b;">{t['d']}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+# --- FOOTER ---
+st.write("<br>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #777; font-size: 0.75rem;'>© 2026 | ALY MOMAR DIALLO | DAKAR, SÉNÉGAL 🇸🇳</p>", unsafe_allow_html=True)
