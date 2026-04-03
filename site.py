@@ -2,149 +2,174 @@ import streamlit as st
 import urllib.parse
 
 # Configuration de la page
-st.set_page_config(page_title="Aly Momar Diallo | Digital Concept", layout="wide", page_icon="✨")
+st.set_page_config(page_title="Aly Momar Diallo | Digital Pro", layout="wide", page_icon="📲")
 
-# --- STYLE CSS (STYLE CANVA : JOYEUX & COLORÉ) ---
+# --- STYLE CSS (CANVA PRO : ÉLÉGANT & COLORÉ) ---
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-
-    /* Fond animé façon dégradé Canva */
-    @keyframes gradientBG {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800&display=swap');
 
     .stApp {
-        background: linear-gradient(-45deg, #FF9A8B, #FF6B6B, #4158D0, #C850C0);
-        background-size: 400% 400%;
-        animation: gradientBG 15s ease infinite;
-        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: 'Outfit', sans-serif;
+        color: #ffffff;
     }
 
-    /* Cartes blanches style "Papier" */
-    .card {
-        background: white;
+    /* Cartes Pro */
+    .pro-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(15px);
+        border-radius: 25px;
         padding: 30px;
-        border-radius: 30px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        color: #2D3436;
+        border: 1px solid rgba(255, 255, 255, 0.2);
         text-align: center;
-        margin-bottom: 20px;
-        transition: 0.3s;
+        transition: all 0.3s ease;
+        height: 100%;
     }
     
-    .card:hover {
-        transform: scale(1.03);
+    .pro-card:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-10px);
     }
 
-    /* Titres colorés */
-    h1 {
-        color: white !important;
-        font-size: 3.5rem !important;
-        font-weight: 700 !important;
-        text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-    }
-    
-    h2, h3 {
-        color: #4834d4 !important;
-        font-weight: 700;
+    .icon-box {
+        font-size: 3rem;
+        margin-bottom: 15px;
     }
 
-    /* Boutons personnalisés */
-    .btn-whatsapp {
-        background-color: #25D366;
+    h1, h2, h3 {
+        font-weight: 800 !important;
+        color: #ffffff !important;
+    }
+
+    /* Image Hero avec bords arrondis */
+    .hero-img {
+        border-radius: 30px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        width: 100%;
+    }
+
+    /* Bouton WhatsApp */
+    .whatsapp-link {
+        background: #25D366;
         color: white !important;
-        padding: 15px 30px;
+        padding: 18px 35px;
         border-radius: 50px;
         text-decoration: none;
-        font-weight: bold;
+        font-weight: 600;
         display: inline-block;
-        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        transition: 0.3s;
+        box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
+    }
+    .whatsapp-link:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 30px rgba(37, 211, 102, 0.5);
     }
 
-    /* Input style Canva */
+    /* Formulaire */
     input, textarea {
-        border-radius: 15px !important;
-        border: 2px solid #f1f2f6 !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+        border-radius: 12px !important;
+        border: none !important;
+        color: #2d3436 !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# --- HEADER ---
-st.write("") # Espacement
-st.markdown("<h1 style='text-align: center;'>✨ Digitalisez votre passion</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: white; font-size: 1.5rem;'>Par Aly Momar Diallo</p>", unsafe_allow_html=True)
+# --- SECTION HERO (TITRE + PHOTO SCAN) ---
+col_hero_text, col_hero_img = st.columns([5, 5])
+
+with col_hero_text:
+    st.write("<br><br>", unsafe_allow_html=True)
+    st.markdown("# Modernisez votre commerce en un Scan ⚡")
+    st.markdown("### Aly Momar Diallo accompagne les entrepreneurs de Dakar dans leur transition digitale.")
+    st.write("Dites adieu aux menus papier et offrez une expérience fluide, propre et rapide à vos clients.")
+
+with col_hero_img:
+    # Image d'un client scannant un QR Code (Unsplash Pro)
+    st.markdown(f"""
+        <img src="https://images.unsplash.com/photo-1595079676339-1534801ad6cf?q=80&w=1000&auto=format&fit=crop" class="hero-img">
+    """, unsafe_allow_html=True)
 
 st.write("<br><br>", unsafe_allow_html=True)
+st.divider()
 
-# --- SECTION ARGUMENTS (ICÔNES COLORÉES) ---
-col1, col2, col3 = st.columns(3)
+# --- SECTION ARGUMENTS PRO ---
+st.markdown("<h2 style='text-align: center;'>Une solution pensée pour vous</h2>", unsafe_allow_html=True)
+st.write("<br>", unsafe_allow_html=True)
 
-with col1:
+c1, c2, c3 = st.columns(3)
+
+with c1:
     st.markdown("""
-    <div class="card">
-        <h1 style="font-size: 50px !important;">🧼</h1>
-        <h3>100% Hygiénique</h3>
-        <p>Plus de menus qui passent de main en main. Un scan, c'est propre et sécurisé pour vos clients.</p>
+    <div class="pro-card">
+        <div class="icon-box">🛡️</div>
+        <h3>Hygiène Maximale</h3>
+        <p>Solution "Zero-Contact" idéale pour rassurer vos clients. Plus de manipulation de supports physiques sales.</p>
     </div>
     """, unsafe_allow_html=True)
 
-with col2:
+with c2:
     st.markdown("""
-    <div class="card">
-        <h1 style="font-size: 50px !important;">🎨</h1>
-        <h3>Design Moderne</h3>
-        <p>Offrez une image "Premium" à votre commerce. Vos produits méritent une belle vitrine.</p>
+    <div class="pro-card">
+        <div class="icon-box">💎</div>
+        <h3>Image de Marque</h3>
+        <p>Positionnez votre commerce comme une enseigne moderne et innovante. Le digital attire une nouvelle clientèle.</p>
     </div>
     """, unsafe_allow_html=True)
 
-with col3:
+with c3:
     st.markdown("""
-    <div class="card">
-        <h1 style="font-size: 50px !important;">🚀</h1>
-        <h3>Zéro Attente</h3>
-        <p>Vos clients consultent les prix et dispos dès leur arrivée. Un service fluide et efficace.</p>
+    <div class="pro-card">
+        <div class="icon-box">📈</div>
+        <h3>Gestion Agile</h3>
+        <p>Mise à jour instantanée de vos tarifs et stocks. Fini les ratures sur les menus ou les réimpressions coûteuses.</p>
     </div>
     """, unsafe_allow_html=True)
 
 # --- SECTION CONTACT ---
 st.write("<br><br>", unsafe_allow_html=True)
-st.markdown("<h2 style='text-align: center; color: white !important;'>Prêt pour le futur ? ⚡</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center;'>Démarrons votre projet aujourd'hui</h2>", unsafe_allow_html=True)
 
-c_col1, c_col2 = st.columns([1, 1])
+contact_left, contact_right = st.columns(2)
 
-with c_col1:
-    # Boîte contact blanche
-    st.markdown("<div class='card'>", unsafe_allow_html=True)
-    st.subheader("M'envoyer un mail 📧")
-    contact_form = f"""
-    <form action="https://formsubmit.co/alymomardiallo75@gmail.com" method="POST">
-        <input type="text" name="commerce" placeholder="Nom de votre boutique" required style="width:100%; padding:10px; margin-bottom:10px;">
-        <input type="text" name="phone" placeholder="Votre numéro" required style="width:100%; padding:10px; margin-bottom:10px;">
-        <textarea name="message" placeholder="Votre projet..." style="width:100%; padding:10px; margin-bottom:10px;"></textarea>
-        <button type="submit" style="width:100%; background:#6c5ce7; color:white; border:none; padding:15px; border-radius:50px; font-weight:bold; cursor:pointer;">ENVOYER MAINTENANT</button>
-    </form>
-    """
-    st.markdown(contact_form, unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
+with contact_left:
+    st.markdown("""
+    <div style="background: white; padding: 30px; border-radius: 25px; color: #2d3436;">
+        <h3 style="color: #667eea !important;">Demander un devis gratuit</h3>
+        <form action="https://formsubmit.co/alymomardiallo75@gmail.com" method="POST">
+            <label>Votre Nom / Commerce</label>
+            <input type="text" name="name" placeholder="Ex: Dibiterie Haoussa" required style="width:100%; padding:12px; margin-bottom:15px;">
+            <label>Téléphone ou Email</label>
+            <input type="text" name="contact" placeholder="Ex: 77XXXXXXX" required style="width:100%; padding:12px; margin-bottom:15px;">
+            <textarea name="message" rows="4" placeholder="Décrivez votre besoin..." style="width:100%; padding:12px; margin-bottom:15px;"></textarea>
+            <button type="submit" style="width:100%; background: #764ba2; color: white; border: none; padding: 15px; border-radius: 12px; font-weight: bold; cursor: pointer;">ENVOYER MA DEMANDE</button>
+        </form>
+    </div>
+    """, unsafe_allow_html=True)
 
-with c_col2:
-    st.markdown("<div class='card' style='height: 100%; display: flex; flex-direction: column; justify-content: center;'>", unsafe_allow_html=True)
-    st.subheader("Direct WhatsApp 📲")
-    st.write("Discutez en direct avec Aly pour une démo sur mesure.")
+with contact_right:
+    st.write("<br><br>", unsafe_allow_html=True)
+    st.markdown("""
+        <div style="text-align: center;">
+            <p style="font-size: 1.2rem;">Besoin d'une réponse rapide ?</p>
+    """)
     
-    whatsapp_msg = urllib.parse.quote("Bonjour Aly ! Je viens de voir votre site vitrine. J'aimerais digitaliser mon commerce.")
+    whatsapp_msg = urllib.parse.quote("Bonjour Aly ! Je souhaite avoir une démo pour mon commerce.")
     whatsapp_url = f"https://wa.me/221776938761?text={whatsapp_msg}"
     
     st.markdown(f"""
-        <a href="{whatsapp_url}" class="btn-whatsapp">
-            ME CONTACTER SUR WHATSAPP
-        </a>
+            <a href="{whatsapp_url}" class="whatsapp-link">
+                💬 PARLER SUR WHATSAPP
+            </a>
+            <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8;">Réponse garantie sous 24h</p>
+        </div>
     """, unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
 
 # --- FOOTER ---
-st.markdown("<br><br>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: white;'>© 2026 | Aly Momar Diallo | Fait avec ❤️ pour le commerce local</p>", unsafe_allow_html=True)
+st.write("<br><br><br>", unsafe_allow_html=True)
+st.markdown("""
+    <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px;">
+        <p>Aly Momar Diallo | Expert en Digitalisation de Proximité | Dakar 2026</p>
+    </div>
+""", unsafe_allow_html=True)
