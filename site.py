@@ -1,7 +1,7 @@
 import streamlit as st
 import urllib.parse
 
-# Configuration de la page
+# Configuration
 st.set_page_config(page_title="Aly Momar Diallo | Digital Fluid Pro", layout="wide", page_icon="🌊")
 
 # --- 1. STYLE CSS (LISSAGE ET DESIGN CANVA) ---
@@ -9,21 +9,18 @@ st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
 
-    /* Masquage des éléments techniques */
     #MainMenu, footer, header {visibility: hidden;}
     [data-testid="stToolbar"] {visibility: hidden !important;}
     .stDeployButton {display:none;}
 
-    /* Fond de base : Transition douce de 1.5s pour la progressivité */
     .stApp {
         background: linear-gradient(135deg, #73A3BF 0%, #FCE1BB 100%);
         background-attachment: fixed;
-        transition: background 1.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+        transition: background 0.8s cubic-bezier(0.1, 0.7, 1.0, 0.1);
         font-family: 'Poppins', sans-serif;
         color: #1e293b;
     }
 
-    /* Cartes translucides pour voir le fluide bouger derrière */
     .canva-card {
         background: rgba(255, 255, 255, 0.75);
         backdrop-filter: blur(15px);
@@ -33,10 +30,7 @@ st.markdown("""
         text-align: center;
         margin-bottom: 20px;
         border: 1px solid rgba(255, 255, 255, 0.5);
-        transition: transform 0.3s ease;
     }
-    
-    .canva-card:hover { transform: translateY(-5px); }
 
     .hero-img {
         border-radius: 40px;
@@ -55,41 +49,32 @@ st.markdown("""
         font-weight: 800;
         display: block;
         text-align: center;
-        box-shadow: 0 15px 30px rgba(37, 211, 102, 0.2);
     }
     </style>
 """, unsafe_allow_html=True)
 
-# --- 2. JAVASCRIPT : MOTEUR DE FLUIDE PROGRESSIF ---
+# --- 2. JAVASCRIPT HYBRIDE (SOURIS PC + GYRO MOBILE) ---
 st.components.v1.html("""
     <script>
     const app = window.parent.document.querySelector('.stApp');
-    let targetAngle = 135;
-    let currentAngle = 135;
-
-    // Fonction de lissage (Lerp)
-    function lerp(start, end, amt) {
-        return (1 - amt) * start + amt * end;
-    }
-
-    function updateOrientation(e) {
-        // On calcule un angle cible basé sur l'inclinaison (beta et gamma)
-        targetAngle = 135 + (e.beta / 2) + (e.gamma / 2);
-    }
-
-    function animate() {
-        // On approche l'angle actuel vers l'angle cible très doucement (0.05)
-        currentAngle = lerp(currentAngle, targetAngle, 0.05);
-        app.style.background = `linear-gradient(${currentAngle}deg, #73A3BF 0%, #FCE1BB 100%)`;
-        requestAnimationFrame(animate);
-    }
-
-    // Lancement de l'animation
-    animate();
-
-    window.parent.addEventListener('deviceorientation', updateOrientation);
     
-    // Activation pour iOS
+    // --- MODE PC (SOURIS) ---
+    window.parent.addEventListener('mousemove', (e) => {
+        let x = e.clientX / window.parent.innerWidth;
+        let y = e.clientY / window.parent.innerHeight;
+        let angle = (x + y) * 180;
+        app.style.background = `linear-gradient(${angle}deg, #73A3BF 0%, #FCE1BB 100%)`;
+    });
+
+    // --- MODE MOBILE (GYROSCOPE) ---
+    function updateGyro(e) {
+        let angle = 135 + (e.beta / 2) + (e.gamma / 2);
+        app.style.background = `linear-gradient(${angle}deg, #73A3BF 0%, #FCE1BB 100%)`;
+    }
+
+    window.parent.addEventListener('deviceorientation', updateGyro);
+    
+    // Activation iOS
     window.parent.document.addEventListener('click', function() {
         if (typeof DeviceOrientationEvent.requestPermission === 'function') {
             DeviceOrientationEvent.requestPermission();
@@ -105,15 +90,15 @@ with col_1:
     st.write("<br><br>", unsafe_allow_html=True)
     st.markdown("<h1 style='font-size: 3.2rem; line-height: 1.1;'>Digitalisez avec Élégance 🌊</h1>", unsafe_allow_html=True)
     st.markdown("### Aly Momar Diallo | Expert Solutions QR")
-    st.write("Offrez une expérience sensorielle et hygiénique unique à vos clients à Dakar.")
-    st.success("📱 **Expérience immersive :** Bougez doucement votre téléphone pour voir les couleurs réagir.")
+    st.write("Une interface fluide qui réagit à vos mouvements. Le futur de votre commerce commence ici.")
+    st.info("✨ **Interactif :** Sur PC, bougez votre souris. Sur Mobile, inclinez l'appareil.")
 
 with col_2:
     st.markdown("""<img src="https://images.unsplash.com/photo-1595079676339-1534801ad6cf?q=80&w=1000&auto=format&fit=crop" class="hero-img">""", unsafe_allow_html=True)
 
 st.divider()
 
-# --- 4. OFFRES (PACKS CFA) ---
+# --- 4. OFFRES ---
 st.markdown("<h2 style='text-align: center; margin-bottom: 30px;'>Nos Offres Digitales 💳</h2>", unsafe_allow_html=True)
 p1, p2, p3, p4 = st.columns(4)
 
@@ -145,7 +130,7 @@ with c_left:
         <form action="https://formsubmit.co/alymomardiallo75@gmail.com" method="POST">
             <input type="text" name="commerce" placeholder="Nom de l'établissement" required style="width:100%; padding:15px; margin-bottom:15px; border-radius:15px; border:1px solid #eee;">
             <input type="text" name="contact" placeholder="Numéro WhatsApp" required style="width:100%; padding:15px; margin-bottom:15px; border-radius:15px; border:1px solid #eee;">
-            <button type="submit" style="width:100%; background: #73A3BF; color: white; border: none; padding: 18px; border-radius: 15px; font-weight: bold; cursor: pointer;">DÉMARRER MAINTENANT</button>
+            <button type="submit" style="width:100%; background: #73A3BF; color: white; border: none; padding: 188px; border-radius: 15px; font-weight: bold; cursor: pointer; padding:18px;">DÉMARRER</button>
         </form>
     </div>
     """, unsafe_allow_html=True)
@@ -163,5 +148,4 @@ with c_right:
         </div>
     """, unsafe_allow_html=True)
 
-# --- FOOTER ---
-st.markdown("<p style='text-align: center; color: #777; font-size: 0.75rem; margin-top:60px; letter-spacing:1px;'>© 2026 | ALY MOMAR DIALLO | DAKAR, SÉNÉGAL 🇸🇳</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #777; font-size: 0.75rem; margin-top:60px;'>© 2026 | ALY MOMAR DIALLO | DAKAR, SÉNÉGAL 🇸🇳</p>", unsafe_allow_html=True)
