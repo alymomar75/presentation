@@ -2,7 +2,7 @@ import streamlit as st
 import urllib.parse
 
 # Configuration de la page
-st.set_page_config(page_title="Aly Momar Diallo | Digital Pro", layout="wide", page_icon="📲")
+st.set_page_config(page_title="QR CODE    | Digital Pro", layout="wide", page_icon="📲")
 
 # --- STYLE CSS (MASQUAGE GITHUB + DESIGN CANVA) ---
 st.markdown("""
