@@ -4,18 +4,26 @@ import urllib.parse
 # Configuration de la page
 st.set_page_config(page_title="Aly Momar Diallo | Digital Pro", layout="wide", page_icon="📲")
 
-# --- STYLE CSS (CANVA PRO : JOYEUX & RASSURANT) ---
+# --- STYLE CSS (MASQUAGE GITHUB + DESIGN CANVA) ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800&display=swap');
 
+    /* 1. CACHER LA BARRE GITHUB ET LE MENU STREAMLIT */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    stDeployButton {display:none;}
+    [data-testid="stToolbar"] {visibility: hidden !important;}
+
+    /* 2. FOND ET POLICE */
     .stApp {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         font-family: 'Outfit', sans-serif;
         color: #ffffff;
     }
 
-    /* Cartes Blanches et Glassmorphism */
+    /* 3. CARTES PRO */
     .pro-card {
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(15px);
@@ -26,23 +34,15 @@ st.markdown("""
         transition: all 0.3s ease;
         height: 100%;
     }
-    
     .pro-card:hover {
         background: rgba(255, 255, 255, 0.2);
         transform: translateY(-10px);
     }
 
-    .icon-box {
-        font-size: 3rem;
-        margin-bottom: 15px;
-    }
+    .icon-box { font-size: 3rem; margin-bottom: 15px; }
+    h1, h2, h3 { font-weight: 800 !important; color: #ffffff !important; }
 
-    h1, h2, h3 {
-        font-weight: 800 !important;
-        color: #ffffff !important;
-    }
-
-    /* Image Hero */
+    /* 4. IMAGE HERO */
     .hero-img {
         border-radius: 30px;
         box-shadow: 0 20px 40px rgba(0,0,0,0.3);
@@ -51,7 +51,7 @@ st.markdown("""
         object-fit: cover;
     }
 
-    /* Boutons et Liens */
+    /* 5. BOUTON WHATSAPP */
     .whatsapp-link {
         background: #25D366;
         color: white !important;
@@ -64,13 +64,12 @@ st.markdown("""
         box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
     }
 
-    /* Formulaire de Contact */
+    /* 6. FORMULAIRE */
     .contact-box {
         background: white; 
         padding: 35px; 
         border-radius: 30px; 
         color: #2d3436;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     }
     input, textarea {
         background: #f8f9fa !important;
@@ -82,15 +81,8 @@ st.markdown("""
         margin-bottom: 15px;
     }
 
-    ul {
-        list-style: none;
-        padding: 0;
-        text-align: left;
-    }
-    li {
-        margin-bottom: 10px;
-        font-size: 0.9rem;
-    }
+    ul { list-style: none; padding: 0; text-align: left; }
+    li { margin-bottom: 10px; font-size: 0.9rem; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -241,6 +233,6 @@ with contact_r:
 st.write("<br><br>", unsafe_allow_html=True)
 st.markdown("""
     <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.2); padding: 20px;">
-        <p>© 2026 | Aly Momar Diallo | Fait avec ❤️ pour le commerce Sénégalais 🇸🇳</p>
+        <p>© 2026 | Aly Momar Diallo | Expert Digital | Dakar, Sénégal 🇸🇳</p>
     </div>
 """, unsafe_allow_html=True)
