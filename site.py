@@ -4,16 +4,13 @@ import urllib.parse
 # 1. CONFIGURATION
 st.set_page_config(page_title="Qr Code | Portfolio Digital", layout="wide", page_icon="📲")
 
-# 2. LIENS ET URLS
-whatsapp_url = f"https://wa.me/221776938761?text={urllib.parse.quote('Bonjour Aly, j\'ai vu votre portfolio !')}"
-
-# Dictionnaire de tes créations
+# 2. LIENS ET RÉALISATIONS
 realisations = [
     {"nom": "KFC Sénégal", "url": "https://kfctest.streamlit.app//", "img": "https://images.unsplash.com/photo-1513639776629-7b61b0ac49cb?q=80&w=400"},
     {"nom": "La Brioche Dorée", "url": "https://menuqrcode.streamlit.app//", "img": "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=400"}
 ]
 
-# --- 3. STYLE CSS (LUXE & DYNAMIQUE) ---
+# --- 3. STYLE CSS ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
@@ -29,7 +26,6 @@ st.markdown("""
         color: #1e293b;
     }
 
-    /* Cartes Glassmorphism */
     .lux-card {
         background: rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(12px);
@@ -40,7 +36,6 @@ st.markdown("""
         margin-bottom: 20px;
     }
 
-    /* Cartes Portfolio */
     .port-card {
         background: white;
         border-radius: 20px;
@@ -52,19 +47,28 @@ st.markdown("""
         color: #1e293b;
         margin-bottom: 20px;
     }
-    .port-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+    .port-card:hover { transform: translateY(-10px); }
     .port-img { width: 100%; height: 150px; object-fit: cover; }
     .port-info { padding: 15px; font-weight: 600; text-align: center; }
 
     .btn-wa {
         background: #25D366;
         color: white !important;
-        padding: 18px 35px;
+        padding: 15px 30px;
         border-radius: 50px;
         text-decoration: none;
         font-weight: 700;
         display: inline-block;
-        box-shadow: 0 10px 25px rgba(37, 211, 102, 0.2);
+        box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+        text-align: center;
+    }
+
+    /* Style du formulaire */
+    [data-testid="stForm"] {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 25px;
+        padding: 20px;
+        border: none;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -90,17 +94,14 @@ c1, c2 = st.columns([6, 4])
 with c1:
     st.write("<br><br>", unsafe_allow_html=True)
     st.markdown("<h1 style='font-size: 3rem;'>L'Expert du Menu Digital à Dakar 🇸🇳</h1>", unsafe_allow_html=True)
-    st.write("Déjà adopté par les plus grands. Découvrez mes réalisations et passez au QR Code de luxe.")
-    st.markdown(f'<br><a href="{whatsapp_url}" class="btn-wa">DISCUTER DE MON PROJET</a>', unsafe_allow_html=True)
+    st.write("Adoptez le QR Code de luxe pour votre établissement.")
 with c2:
     st.image("https://images.unsplash.com/photo-1595079676339-1534801ad6cf?w=600", use_container_width=True)
 
 st.write("---")
 
-# --- SECTION PORTFOLIO ---
+# PORTFOLIO
 st.markdown("<h2 style='text-align: center;'>Nos Réalisations ✨</h2>", unsafe_allow_html=True)
-st.write("<p style='text-align: center;'>Cliquez pour visualiser les menus en direct</p>", unsafe_allow_html=True)
-
 pc1, pc2, pc3 = st.columns(3)
 for i, site in enumerate(realisations):
     with (pc1 if i==0 else pc2 if i==1 else pc3):
@@ -111,12 +112,41 @@ for i, site in enumerate(realisations):
             </a>
         """, unsafe_allow_html=True)
 
-st.write("<br><br>", unsafe_allow_html=True)
+st.write("<br>")
 
-# --- SECTION TARIFS ---
-st.markdown("<h2 style='text-align: center;'>Nos Offres 💳</h2>", unsafe_allow_html=True)
+# --- NOUVELLE SECTION : FORMULAIRE REDIRECT WHATSAPP ---
+st.markdown("<h2 style='text-align: center;'>Demander mon devis personnalisé 📝</h2>", unsafe_allow_html=True)
+col_form_1, col_form_2, col_form_3 = st.columns([1, 2, 1])
+
+with col_form_2:
+    with st.form("wa_form"):
+        nom_etablissement = st.text_input("Nom de votre établissement", placeholder="Ex: Restaurant Le Terrou-Bi")
+        pack_choisi = st.selectbox("Pack souhaité", ["Pack FLASH (3 500 F)", "Pack STARTER (15 000 F)", "Pack BUSINESS (35 000 F)", "Pack PREMIUM (Sur Devis)"])
+        message_supp = st.text_area("Détails supplémentaires", placeholder="Ex: J'aimerais un menu avec photos...")
+        
+        submitted = st.form_submit_button("Générer mon message WhatsApp")
+        
+        if submitted:
+            if nom_etablissement:
+                # Préparation du texte WhatsApp
+                texte_final = f"Bonjour Aly ! Je suis le responsable de {nom_etablissement}. Je suis intéressé par le {pack_choisi}. {message_supp}"
+                texte_encode = urllib.parse.quote(texte_final)
+                link = f"https://wa.me/221776938761?text={texte_encode}"
+                
+                st.markdown(f"""
+                    <div style="text-align: center; margin-top: 20px;">
+                        <p>✅ Votre message est prêt !</p>
+                        <a href="{link}" target="_blank" class="btn-wa">🚀 ENVOYER SUR WHATSAPP</a>
+                    </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.error("Veuillez entrer le nom de votre établissement.")
+
+st.write("<br>---")
+
+# TARIFS
+st.markdown("<h2 style='text-align: center;'>Nos Tarifs 💳</h2>", unsafe_allow_html=True)
 p1, p2, p3, p4 = st.columns(4)
-
 tarifs = [
     {"n": "Pack FLASH", "p": "3 500 F", "d": "Le QR Code simple", "c": "#73A3BF"},
     {"n": "Pack STARTER", "p": "15 000 F", "d": "Menu (Max 15 art.)", "c": "#5a8ba8"},
@@ -134,6 +164,5 @@ for i, t in enumerate(tarifs):
         </div>
         """, unsafe_allow_html=True)
 
-# --- FOOTER ---
-st.write("<br>", unsafe_allow_html=True)
+# FOOTER
 st.markdown("<p style='text-align: center; color: #777; font-size: 0.75rem;'>© 2026 | ALY MOMAR DIALLO | DAKAR, SÉNÉGAL 🇸🇳</p>", unsafe_allow_html=True)
