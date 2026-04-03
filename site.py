@@ -151,7 +151,7 @@ with contact_left:
 with contact_right:
     st.write("<br><br>", unsafe_allow_html=True)
     st.markdown("""
-        <div style="text-align: center;">
+        <div style="text-align: center">
             <p style="font-size: 1.2rem;">Besoin d'une réponse rapide ?</p>
     """)
     
